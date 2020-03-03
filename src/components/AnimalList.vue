@@ -116,8 +116,7 @@ export default {
         dateOfBirth: new Date(),
         name: '',
         type: ''
-      },
-      filteredTypes: []
+      }
     };
   },
   methods: {
@@ -126,23 +125,27 @@ export default {
     },
 
     moveToTop(id) {
-      this.animals.map((animal, index) => {
-        if (animal.id === id) {
-          this.movedAnimal = this.animals[index];
-          this.animals.splice(index, 1);
-          this.animals.unshift(this.movedAnimal);
+      this.animals.forEach((animal, index) => {
+        if (animal.id !== id) {
+          return false;
         }
+
+        this.movedAnimal = this.animals[index];
+        this.animals.splice(index, 1);
+        this.animals.unshift(this.movedAnimal);
       });
     },
     handleSubmit() {
-      console.log(this.animalToAdd);
       this.animals.push(this.animalToAdd);
     },
     alertTypes(type) {
-      this.filteredTypes = this.animals.filter(
-        animal => animal.type.toLowerCase() === type.toLowerCase()
+      alert(
+        JSON.stringify(
+          this.animals.filter(
+            animal => animal.type.toLowerCase() === type.toLowerCase()
+          )
+        )
       );
-      alert(JSON.stringify(this.filteredTypes));
     }
   }
 };
@@ -150,7 +153,7 @@ export default {
 
 <style scoped>
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .l-animal-grid {
@@ -164,13 +167,13 @@ export default {
   padding: 0 15px;
 }
 .c-container__column {
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
 }
 
 .c-container__column:first-child {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .c-container {
